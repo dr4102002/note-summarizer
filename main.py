@@ -32,13 +32,6 @@ app.add_middleware(
 class NoteUrlRequest(BaseModel):
     url: str
 
-@app.get("/")
-async def read_index():
-    return FileResponse("static/index.html")
-
-# Mount the static directory to serve CSS and JS
-app.mount("/", StaticFiles(directory="static"), name="static")
-
 @app.post("/summarize")
 async def summarize_note(request: NoteUrlRequest):
     url = request.url
@@ -105,7 +98,6 @@ async def summarize_note(request: NoteUrlRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to generate summary with OpenAI: {str(e)}")
 
-# Test endpoint
-@app.get("/")
-def read_root():
-    return {"status": "Backend is running"}
+# Mount the static directory to serve CSS, JS, and HTML
+# This must be at the bottom so it doesn't override API routes like /summarize
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
