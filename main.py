@@ -83,12 +83,12 @@ async def summarize_note(request: NoteUrlRequest):
         """
         
         completion = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "あなたはプロの編集者であり、文章の要点を的確に捉え、分かりやすく要約する専門家です。出力は必ずプレーンテキストのみにしてください。"},
                 {"role": "user", "content": prompt}
             ],
-            temperature=0.7,
+            temperature=0.3,
         )
         
         # Ensure the summary is properly encoded as a UTF-8 string before returning
