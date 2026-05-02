@@ -93,7 +93,7 @@ async def summarize_note(request: NoteUrlRequest):
         
         # Ensure the summary is properly encoded as a UTF-8 string before returning
         summary = completion.choices[0].message.content
-        return {"summary": str(summary)}
+        return {"summary": f"{url}\n\n{str(summary)}"}
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to generate summary with OpenAI: {str(e)}")
