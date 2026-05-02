@@ -85,7 +85,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!currentRawMarkdown) return;
         
         // Add "> " to the beginning of each line to trigger Note's blockquote shortcut
-        const textToCopy = currentRawMarkdown.split('\n').map(line => `> ${line}`).join('\n');
+        const lines = currentRawMarkdown.split('\n');
+        const urlLine = lines[0];
+        const restLines = lines.slice(1).map(line => `> ${line}`).join('\n');
+        const textToCopy = urlLine + '\n' + restLines;
         
         navigator.clipboard.writeText(textToCopy).then(() => {
             // Success State
